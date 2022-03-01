@@ -1,0 +1,26 @@
+{
+  "name": "mongofsmanager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "natale paolo santo stefano - bogojob@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^14.3.2",
+    "express": "^4.17.3",
+    "mongoose": "^6.1.8",
+    "nodemon": "^2.0.15",
+    "set-value": "^4.1.0",
+    "to": "^0.2.9",
+    "update": "^0.7.4"
+  },
+  "description": "file system manager based on mongodb document",
+  "keywords": [
+    "mongodb",
+    "filesystem",
+    "manager"
+  ]
+}
