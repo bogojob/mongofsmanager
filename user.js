@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-
+//const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 // const childnodeSchema = new mongoose.Schema([
 //     {
 
@@ -53,7 +53,7 @@ const userSchema = new mongoose.Schema(
         cc: String,
         mailconfirm: Boolean,
         confirmat: String,
-        filesystem: { nodes: [nodeSchema],size:Number }
+        filesystem: { nodes: [nodeSchema], size: Number }
     }
 );
 
@@ -64,9 +64,10 @@ userSchema.method("toOBJECT", function () {
     return object;
 });
 
-module.exports = {
-    userModel: mongoose.model('user', userSchema),
-    userSchema: userSchema,
-   
-  
+const userModel = mongoose.model('user', userSchema);
+
+
+export {
+    userModel,
+    userSchema
 }

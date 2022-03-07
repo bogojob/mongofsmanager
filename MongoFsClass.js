@@ -3,7 +3,7 @@
 /** JSON FILE SYSTEM is a class to manage a nested Json structure that emulates a file system.
  * The methods it contains, can perform CRUD operations by updating the size in amount
  * of space occupied by each node (folder)  */
-class JSONFS {
+class MongoFsClass {
 
     /* ----- Class properties ------ */
     /**determines whether the searched node has been found */
@@ -33,13 +33,15 @@ class JSONFS {
     #locatenode = undefined; /* Object Node Located */
 
 
-    constructor(rootNodeId, operation, payload) {
-        this.#rootNodeId = rootNodeId;
-        this.#operation = operation;
-        this.#payload = payload;
+    // constructor(rootNodeId, operation, payload) {
+    //     this.#rootNodeId = rootNodeId;
+    //     this.#operation = operation;
+    //     this.#payload = payload;
 
-    }
+    // }
+    // constructor() {
 
+    // }
 
 
     /** getter and setter method 
@@ -136,7 +138,7 @@ class JSONFS {
                 if (key === '_id' && value._id.valueOf() === toSearch) {
                     console.log('trovato ! => ' + value._id.valueOf());
                     if (key === '_id' && !this.isDirectoryReached()) {
-                        setWalkedNode(value._id.valueOf());
+                        this.setWalkedNode(value._id.valueOf());
                     }
                     if (this.getOperation() === undefined) { this.setLocateNode(jsonStructure) }
                     this.setNodeSize(jsonStructure.size);
@@ -358,8 +360,7 @@ class JSONFS {
  * @module JSONFS
  */
 
-module.exports = JSONFS;
-//export default JSONFS;
+export { MongoFsClass }
 
 
 
