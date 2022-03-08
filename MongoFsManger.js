@@ -15,6 +15,7 @@ import { MongoFsClass } from "./MongoFsClass.js";
  * @returns {object} node added
  * 
  */
+let updatedDoc = undefined;
 const addnode = async (options) => {
   const tofind = options.tofind;
   const nodes = options.nodes;
@@ -97,15 +98,15 @@ const addnode = async (options) => {
     filter = [];
   }
 
-  let updatedoc = await model.findOneAndUpdate(
+  updatedDoc = await model.findOneAndUpdate(
     { "_id": new mongoose.Types.ObjectId(docid) },
     { $push: objPush, $set: objSet },
     {
       arrayFilters: filter
-    }).setOptions({ returnDocument: 'after'}).lean(true);
+    }).setOptions({ returnDocument: 'after' }).lean(true);
 
-  //return payload;/* return node added */
-  return updatedoc;/* return node added */
+  
+  return payload;/* return node added */
 
 }
 
@@ -218,37 +219,34 @@ const removenode = async (options) => {
   }
   /* update document on database */
 
-  let updatedoc = await model.findOneAndUpdate(
+   updatedDoc = await model.findOneAndUpdate(
     { "_id": new mongoose.Types.ObjectId(docid) },
     { $pull: objPull, $set: objSet },
     {
       arrayFilters: filter
     }).setOptions({ returnDocument: 'after', lean: true });
 
-  return updatedoc;
+  return nodeLocate;/* return node removed */
 
 }
 
 /*  */
 const movenode = async (options) => {
-  const toFind = options.tofind;
-  const toDest = options.toDest;
+  const tofind = options.tofind;
+  const todest = options.todest;
   const nodes = options.nodes;
-
-  //const mfs = options.jsonfs;
+  const model = options.model;
   const filesystemsize = options.fssize;
   const docid = options.docid;
-
-  let opt = { tofind: toFind, docid: docid, nodes: nodes, fssize: filesystemsize }
-  const removedNode = await removeFromDb(opt);
-
-  opt = { tofind: toDest, docid: docid, nodes: nodes, fssize: filesystemsize, payload: removedNode }
-  const addedNode = await addToDb(opt)
-
-  return addedNode;
+  let opt = { tofind: tofind, docid: docid, nodes: nodes, model: model, fssize: filesystemsize }
+  const removedNode = await removenode(opt);
+  opt = { tofind: todest, docid: docid, nodes: nodes, model: model, fssize: filesystemsize, payload: removedNode }
+  const addedNode = await addnode(opt)
+  return addedNode;/* return moved node */
 
 }
 export {
+  updatedDoc,
   addnode,
   removenode,
   movenode
