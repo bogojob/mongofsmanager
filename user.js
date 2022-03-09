@@ -1,22 +1,5 @@
-//const mongoose = require('mongoose');
+
 import mongoose from 'mongoose';
-// const childnodeSchema = new mongoose.Schema([
-//     {
-
-//         name: String,
-//         type: { type: String, enum: ['directory', 'file'], default: 'directory' },
-//         mime: String,
-//         size: Number,
-//         childs: [],
-//         parts: []
-//     }]);
-
-// childnodeSchema.method("toJSON", function () {
-//     const { __v, _id, ...object } = this.toObject();
-//     object.id = _id;
-//     return object;
-// });
-
 
 const nodeSchema = new mongoose.Schema(
     {
