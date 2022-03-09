@@ -81,7 +81,9 @@ the operations made available by the package, are the classic operations that ar
 - move the node
 - delete the node
 
-<span style="color:orange"> Note: In case the created node is of type _file_, it will be up to the developer to decide where and how to save the content.</span>
+```diff
+! Note: In case the created node is of type _file_, it will be up to the developer to decide where and how to save the content.
+```
 
 
 
