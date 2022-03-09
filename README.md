@@ -81,13 +81,11 @@ the operations made available by the package, are the classic operations that ar
 - move the node
 - delete the node
 
-```diff
-! Note: In case the created node is of type _file_, it will be up to the developer to decide where and how to save the content.
-```
+
+*Note: In case the created node is of type _file_, it will be up to the developer to decide where and how to save the content.*
 
 
-
-<span style="color:yellow">after each operation, all updates to the size fields of the affected nodes are made. This keeps the size of each filesystem directory consistent.</span>
+Note: after each operation, all updates to the size fields of the affected nodes are made. This keeps the size of each filesystem directory consistent.
 
 ## How to use
 
