@@ -7,6 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
+  "publishConfig": {
+   "@BOGOJOB:registry": "https://npm.pkg.github.com"
+ }
   "author": "natale paolo santo stefano - bogojob@gmail.com",
   "license": "MIT",
   "dependencies": {
