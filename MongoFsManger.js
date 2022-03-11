@@ -178,7 +178,7 @@ const removenode = async (options) => {
 
     /* $set size */
     let optionSet = `filesystem.nodes.$[${deeplevel + nodePointer}].size`;
-    optSize[`${optionSet}`] = walkedNodeSize[nodePointer] - nodeSize;
+    optSize[`${optionSet}`] = walkedNodeSize.length > 0 ? walkedNodeSize[nodePointer] - nodeSize :  nodeSize;
     objSet = { ...optSize }
 
     /* ArrayFilters filter*/

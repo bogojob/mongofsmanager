@@ -11,7 +11,7 @@ class MongoFS {
     #doc = undefined;
     #nodes = undefined;
     #filesystemsize = 0;
-    #payload = undefined;;
+    #payload = undefined;
     #options = {};
 
     constructor(settings) {
@@ -26,26 +26,13 @@ class MongoFS {
         if (this.#docid === undefined) { throw 'one need parameter is undefined' }
         if (this.#model === undefined) { throw 'one need parameter is undefined' }
 
-
-
-
-
     }
-    // constructor(tofind, docid, model, payload) {
-    //     this.#tofind = tofind;
-    //     this.#todest = todest;
-    //     this.#docid = docid;
-    //     this.#model = model;
-    //     this.#payload = payload;
-    // }
+    
     /* getter & setter */
     #setnodes = (nodes) => { this.#nodes = nodes };
-    #getnodes = () => { return this.#nodes };
     #setfilesystemsize = (size) => { this.#filesystemsize = size }
     #setoptions = (opt) => { this.#options = opt };
     #getoptions = () => { return this.#options };
-
-
 
     /* public methods */
 
@@ -56,7 +43,6 @@ class MongoFS {
         this.#setfilesystemsize(this.#doc[0].filesystem.size);
         let opt = { tofind: this.#tofind, todest: this.#todest, docid: this.#docid, nodes: this.#nodes, model: this.#model, payload: this.#payload, fssize: this.#filesystemsize };
         this.#setoptions(opt);
-        //console.log('option values  ' + JSON.stringify(this.#getoptions()));
         return this.#doc;
     }
 

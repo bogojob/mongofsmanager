@@ -105,10 +105,10 @@ class MongoFsClass {
      * 
      */
     locate = async (toSearch, jsonStructure) => {
-        console.log("------------------nodelocalte init-----------------------------");
+        //console.log("------------------nodelocalte init-----------------------------");
 
         if (Object.prototype.toString.call(jsonStructure) === '[object Object]') {
-            console.log('analyzing oject ...');
+            //console.log('analyzing oject ...');
 
             /* cerca l'id dell'ooggeto sul nodo attuale */
             Object.entries(jsonStructure).forEach(([key, value]) => {
@@ -129,14 +129,14 @@ class MongoFsClass {
 
                 //_______________ 
 
-                if (key === 'name') { console.log('analizing... ' + value); }
-                if (key === '_id') { console.log('id_... ' + value); }
+                // if (key === 'name') { console.log('analizing... ' + value); }
+                // if (key === '_id') { console.log('id_... ' + value); }
 
                 //_______________ 
 
 
                 if (key === '_id' && value._id.valueOf() === toSearch) {
-                    console.log('trovato ! => ' + value._id.valueOf());
+                    console.log('found it ! => ' + value._id.valueOf());
                     if (key === '_id' && !this.isDirectoryReached()) {
                         this.setWalkedNode(value._id.valueOf());
                     }
@@ -155,7 +155,7 @@ class MongoFsClass {
                     this.incDeepPath(1);
                     /* every time you go down a level, the <checkingChilds> variable must be set to true */
                     this.setCheckChilds(true);
-                    console.log('levelDeep => ' + this.getDeepPath());
+                    //console.log('levelDeep => ' + this.getDeepPath());
                     await this.locate(toSearch, jsonStructure.childs);
                 }
                 else { // No! it's haven't chindrens
@@ -163,27 +163,27 @@ class MongoFsClass {
                 }
             }
             else {
-                console.log('node name found :' + jsonStructure.name);
+               // console.log('node name found :' + jsonStructure.name);
 
                 /* make operation on jsonStructure */
                 switch (this.getOperation()) {
 
                     case 'add':
-                        console.log('current operation add');
+                       // console.log('current operation add');
                         (jsonStructure.childs).push(this.getPayload());
                         break;
                     case 'remove':
-                        console.log('current operation remove');
+                        //console.log('current operation remove');
                         let jsochilds = jsonStructure.childs;
                         let jsoFiltered = jsochilds.filter(item => {
-                            console.log('item.id' + item._id);
+                            //console.log('item.id' + item._id);
                             return item._id.valueOf() !== this.#rootNodeId;
                         });
                         jsonStructure.childs = jsoFiltered;
                         break;
 
                     case 'update':
-                        console.log('current operation: update');
+                       // console.log('current operation: update');
                         if (this.getLastOperation() === 'add') {
                             jsonStructure.size += (this.getPayload()).size;
                         }
@@ -207,7 +207,7 @@ class MongoFsClass {
                 }
                 else {
                     this.setRootIndex(i);
-                    console.log('rootIndex : ' + this.getRootIndex());
+                   //console.log('rootIndex : ' + this.getRootIndex());
                 }
                 await this.locate(toSearch, jsonStructure[i]);
 
@@ -329,14 +329,6 @@ class MongoFsClass {
             //this.#nodeSize = ars[ij];
             await this.locate(ar[ij], jsonObject);
         }
-
-        // ar.forEach(async item => {
-        //     this.reset();
-        //     await this.locate(item, jsonObject, this.getPayLoadNode(), 'updatesize');
-        // })
-
-        //const k = jsonObject.reduce((prev, current) => prev + current.size, 0);
-        //console.log('TOTALE FS :' + k);
         return await jsonObject;
     }
 
