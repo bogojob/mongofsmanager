@@ -1,3 +1,12 @@
+/*
+ * Filename: MongoFsClass.js
+ * Project: mongofsmanager
+ * Created Date: 01 feb 2022
+ *
+ * Author: Natale Paolo Santo Stefano
+ * Licence: MIT
+ * Copyright (c) 2022 Natale Paolo Santo Stefano
+*/
 
 
 /** JSON FILE SYSTEM is a class to manage a nested Json structure that emulates a file system.
@@ -25,28 +34,14 @@ class MongoFsClass {
     /**Depth level at which the node was found*/
     #pathDeep = 0;
 
-    /** @param {object} payload - Object to be inserted into the structure .*/
-    /** @param {string} operation (add,remove, ..)- operation to be carried out on the structure*/
     #rootIndex = 0;
     #rootNodeId = 0;
     #operation = undefined;
-    #locatenode = undefined; /* Object Node Located */
+    /* Object Node Located */
+    #locatenode = undefined;
 
 
-    // constructor(rootNodeId, operation, payload) {
-    //     this.#rootNodeId = rootNodeId;
-    //     this.#operation = operation;
-    //     this.#payload = payload;
-
-    // }
-    // constructor() {
-
-    // }
-
-
-    /** getter and setter method 
-     * @private
-    */
+    /** getter and setter method  */
 
     getOperation = () => { return this.#operation }
     setOperation = (op) => { this.#operation = op }
@@ -92,10 +87,6 @@ class MongoFsClass {
     getLastOperation = () => { return this.#lastOperation }
     setLastOperation = (operation) => { this.#lastOperation = operation }
 
-    // setPayLoadNode = (payload) => { this.#payLoadNode = payload }
-    // getPayLoadNode = () => { return this.#payLoadNode }
-
-
     /**
      * @private
      * @param {string}  toSearch - node id to search.
@@ -108,11 +99,9 @@ class MongoFsClass {
         //console.log("------------------nodelocalte init-----------------------------");
 
         if (Object.prototype.toString.call(jsonStructure) === '[object Object]') {
-            //console.log('analyzing oject ...');
 
             /* cerca l'id dell'ooggeto sul nodo attuale */
             Object.entries(jsonStructure).forEach(([key, value]) => {
-                //console.log('processed key :' + key + '-  valore : ' + value);
                 if (key === 'type' && value === 'directory') {
                     this.setDirectoryReached(true);
                 }
@@ -125,15 +114,6 @@ class MongoFsClass {
                 if (key === 'size' && this.isDirectoryReached()) {
                     this.setWalkedNodeSize(value);
                 }
-
-
-                //_______________ 
-
-                // if (key === 'name') { console.log('analizing... ' + value); }
-                // if (key === '_id') { console.log('id_... ' + value); }
-
-                //_______________ 
-
 
                 if (key === '_id' && value._id.valueOf() === toSearch) {
                     console.log('found it ! => ' + value._id.valueOf());
@@ -155,7 +135,6 @@ class MongoFsClass {
                     this.incDeepPath(1);
                     /* every time you go down a level, the <checkingChilds> variable must be set to true */
                     this.setCheckChilds(true);
-                    //console.log('levelDeep => ' + this.getDeepPath());
                     await this.locate(toSearch, jsonStructure.childs);
                 }
                 else { // No! it's haven't chindrens
@@ -163,27 +142,22 @@ class MongoFsClass {
                 }
             }
             else {
-               // console.log('node name found :' + jsonStructure.name);
 
                 /* make operation on jsonStructure */
                 switch (this.getOperation()) {
 
                     case 'add':
-                       // console.log('current operation add');
                         (jsonStructure.childs).push(this.getPayload());
                         break;
                     case 'remove':
-                        //console.log('current operation remove');
                         let jsochilds = jsonStructure.childs;
                         let jsoFiltered = jsochilds.filter(item => {
-                            //console.log('item.id' + item._id);
                             return item._id.valueOf() !== this.#rootNodeId;
                         });
                         jsonStructure.childs = jsoFiltered;
                         break;
 
                     case 'update':
-                       // console.log('current operation: update');
                         if (this.getLastOperation() === 'add') {
                             jsonStructure.size += (this.getPayload()).size;
                         }
@@ -198,7 +172,6 @@ class MongoFsClass {
 
 
         else if (Object.prototype.toString.call(jsonStructure) === '[object Array]') {
-            //console.log('Si e un array');
             for (let i = 0; i < jsonStructure.length; i++) {
                 if (this.isNodeFound()) { break }
 
@@ -207,7 +180,6 @@ class MongoFsClass {
                 }
                 else {
                     this.setRootIndex(i);
-                   //console.log('rootIndex : ' + this.getRootIndex());
                 }
                 await this.locate(toSearch, jsonStructure[i]);
 
@@ -305,11 +277,6 @@ class MongoFsClass {
     }
 
 
-
-
-
-
-
     /**
     * @description increase/decrease the size of each node involved in the operation
     * @private
@@ -346,11 +313,6 @@ class MongoFsClass {
         this.setNodeSize(0);
     }
 }
-
-/**
- * JSONFS.
- * @module JSONFS
- */
 
 export { MongoFsClass }
 

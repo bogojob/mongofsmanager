@@ -17,6 +17,7 @@
   "author": "natale paolo santo stefano - bogojob@gmail.com",
   "license": "MIT",
   "dependencies": {
+    "@bogojob/mongofsmanager": "github:bogojob/mongofsmanager",
     "dotenv": "^14.3.2",
     "mongoose": "^6.1.8"
   },

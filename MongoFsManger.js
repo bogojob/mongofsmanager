@@ -1,9 +1,18 @@
-//const MongoFsClass = require('./JsonFsClass');
-
-
-import { query } from "express";
 import { mongoose } from "mongoose";
 import { MongoFsClass } from "./MongoFsClass.js";
+
+
+/*
+ * Filename: MongoFsManager.js
+ * Project: mongofsmanager
+ * Created Date: 01 feb 2022
+ *
+ * Author: Natale Paolo Santo Stefano
+ * Licence: MIT
+ * Copyright (c) 2022 Natale Paolo Santo Stefano
+*/
+let updatedDoc = undefined;
+
 /**
  *
  * @param {object} :{tofind <string>: _id node to find,
@@ -15,7 +24,6 @@ import { MongoFsClass } from "./MongoFsClass.js";
  * @returns {object} node added
  * 
  */
-let updatedDoc = undefined;
 const addnode = async (options) => {
   const tofind = options.tofind;
   const nodes = options.nodes;
@@ -87,7 +95,7 @@ const addnode = async (options) => {
     optSize['filesystem.size'] = filesystemsize + payload.size;
     objSet = { ...optSize }
     objPush[`${optionPush}.childs`] = payload;
-    console.log('ObjPush =>' + JSON.stringify(objPush));
+    //console.log('ObjPush =>' + JSON.stringify(objPush));
 
   }
   else { // si cercando di inseri l'oggetto nella root del filesystem
@@ -209,7 +217,7 @@ const removenode = async (options) => {
     optSize['filesystem.size'] = filesystemsize - nodeSize;
     objSet = { ...optSize }
     objPull[`${optionPull}.childs`] = payload;
-    console.log('objPull =>' + JSON.stringify(objPull));
+   // console.log('objPull =>' + JSON.stringify(objPull));
   }
   else { // si cercando di fare l'opearzione sulla root del filesystem
     objPull['filesystem.nodes'] = payload;
