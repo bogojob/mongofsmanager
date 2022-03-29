@@ -114,6 +114,13 @@ class MongoFsClass {
                 if (key === 'size' && this.isDirectoryReached()) {
                     this.setWalkedNodeSize(value);
                 }
+                /* solo a scopo di test  */
+                if (key === 'name') {
+                    console.log('Nome nodo :' + value);
+                }
+                if (key === '_id') {
+                    console.log("Ananlisi nodo ..." + value._id.valueOf());
+                }
 
                 if (key === '_id' && value._id.valueOf() === toSearch) {
                     console.log('found it ! => ' + value._id.valueOf());
@@ -137,8 +144,9 @@ class MongoFsClass {
                     this.setCheckChilds(true);
                     await this.locate(toSearch, jsonStructure.childs);
                 }
-                else { // No! it's haven't chindrens
-
+                
+                if(this.isDirectoryReached() && jsonStructure.childs.length === 0){
+                    this.#walkedNode.pop();
                 }
             }
             else {
@@ -172,6 +180,8 @@ class MongoFsClass {
 
 
         else if (Object.prototype.toString.call(jsonStructure) === '[object Array]') {
+
+            /*  ---------------loop princiale ---------------------- */
             for (let i = 0; i < jsonStructure.length; i++) {
                 if (this.isNodeFound()) { break }
 
@@ -184,8 +194,17 @@ class MongoFsClass {
                 await this.locate(toSearch, jsonStructure[i]);
 
             }
+            /*  ---------------fine loop princiale ---------------------- */
+
+
+            /* exit from loops */
+            /* stavi cercando dentro ai figli a non hai trovato nulla */
             if (this.isCheckingChilds() && !this.isNodeFound()) {
                 this.decDeepPath(1);
+                // this.#walkedNode.pop();
+                // this.#walkedNodeSize.pop();
+
+
                 /* every time you go up a level, the <checkingChilds> variable must be set to false */
                 this.setCheckChilds(false);
                 this.resetWalkedNode();

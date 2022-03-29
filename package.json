@@ -1,14 +1,14 @@
 {
   "name": "@bogojob/mongofsmanager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "type": "module",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bogojob/mongofsmanager.git"
+    "url": "git+https://registry.npmjs.org/bogojob/mongofsmanager.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
